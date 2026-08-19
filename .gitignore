@@ -1,0 +1,5 @@
+.tmp-*.json
+node_modules/
+android-shell/node_modules/
+.expo/
+dist/

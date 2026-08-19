@@ -15,7 +15,9 @@ Migration `20260819_001_retail_pos_foundation.sql` เพิ่มชุดต�
 
 ฐานข้อมูลกลางคือ project `abtsctwfkgzciseppach` (Apservice) และอยู่ในสถานะใช้งาน. ตาราง `stores` ใช้ primary key ชนิด `text`, `delivery_orders.id` ใช้ `text`, ส่วนผู้ใช้ใช้ `auth.users.id` ชนิด `uuid`; migration จึงกำหนด foreign key ตามชนิดข้อมูลจริง. สิทธิ์เดิมใช้ helper `private.has_role(...)` และ `private.owns_store(...)` แบบ `SECURITY DEFINER`; migration reuse helper ดังกล่าวแทนการสร้าง role system ซ้ำ.
 
-ไม่มี RPC ที่มีชื่อขึ้นต้น `retail_` ก่อน migration จึงไม่มีความเสี่ยงทับชื่อฟังก์ชันเดิม. Post-migration security audit พบว่า default privilege ของ project ให้ `anon` เรียกฟังก์ชันโดยตรง จึงเพิ่ม migration `20260819_002_restrict_retail_rpcs.sql` เพื่อถอน `EXECUTE` จาก `anon` แบบ explicit และคงสิทธิ์ไว้เฉพาะ `authenticated`. `catalog-media` เป็น bucket สาธารณะที่กำหนดรับ JPEG/PNG/WebP และมี policy สำหรับ `store_owner` ใน path `merchant/{auth.uid()}/...`; UI Phase 7 จะอัปโหลดเฉพาะภาพที่บีบแล้วไปยัง path นี้ และส่ง URL ที่ได้จากระบบเข้าสู่ RPC เท่านั้น. จะไม่มีช่องให้กรอก URL เอง.
+ไม่มี RPC ที่มีชื่อขึ้นต้น `retail_` ก่อน migration จึงไม่มีความเสี่ยงทับชื่อฟังก์ชันเดิม. Post-migration security audit พบว่า default privilege ของ project ให้ `anon` เรียกฟังก์ชันโดยตรง จึงเพิ่ม migration `20260819_002_restrict_retail_rpcs.sql` เพื่อถอน `EXECUTE` จาก `anon` แบบ explicit และคงสิทธิ์ไว้เฉพาะ `authenticated`. Migration `20260819_003_customer_retail_checkout.sql` เพิ่มเฉพาะ RPC ใหม่สำหรับ customer catalog, checkout, reserve/release/commit stock และเพิ่ม reference ใน audit trail กับสถานะ reservation ในตาราง Retail ใหม่ โดยไม่แก้ food RPC หรือ policy เดิม. `catalog-media` เป็น bucket สาธารณะที่กำหนดรับ JPEG/PNG/WebP และมี policy สำหรับ `store_owner` ใน path `merchant/{auth.uid()}/...`; UI Phase 7 จะอัปโหลดเฉพาะภาพที่บีบแล้วไปยัง path นี้ และส่ง URL ที่ได้จากระบบเข้าสู่ RPC เท่านั้น. จะไม่มีช่องให้กรอก URL เอง.
+
+ผลตรวจหลัง migration `20260819_003` พบว่า `anon` ยังรายงานสิทธิ์ `EXECUTE` จาก default privilege แม้มีการถอนจาก `public`; จึงเพิ่ม `20260819_004_restrict_customer_retail_rpcs.sql` เพื่อถอนจาก role `anon` โดยตรง และจะตรวจ ACL ซ้ำก่อนเริ่มเชื่อม UI Customer.
 
 ## การควบคุมความเสี่ยง
 
@@ -26,6 +28,7 @@ Migration `20260819_001_retail_pos_foundation.sql` เพิ่มชุดต�
 | ตัด stock ซ้ำเมื่อ retry | `idempotency_key` unique ต่อ store และ RPC คืน receipt เดิม | เรียก sale RPC ซ้ำด้วย key เดิม |
 | แก้ประวัติหรือ movement ย้อนหลัง | ไม่มี direct-write policy สำหรับ sales/items/movements | ตรวจ policy และทดสอบ direct insert/update ด้วย client role |
 | กระทบ food workflow เดิม | ไม่แตะ `menu_items` และไม่แก้ `delivery_orders` | regression read/write ของ order เดิมใน Phase 8 |
+| ออร์เดอร์ Retail จองสต๊อกค้าง | customer checkout lock balance และบันทึก `reservation_status`; RPC แยกคืน/ตัดสต๊อกต้องยืนยันสถานะปลายทาง | ทดสอบ checkout, cancel/release และ delivered/commit ด้วยบัญชีคนละบทบาท |
 
 ## ความเข้ากันได้ WebView–APK
 

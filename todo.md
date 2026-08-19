@@ -12,3 +12,5 @@
 - [ ] Verify web, Android shell configuration and cross-app contracts
 - [x] Add additive Retail POS schema, server-authoritative sale RPC and append-only inventory audit trail
 - [x] Restrict Retail POS SECURITY DEFINER RPCs to authenticated users after advisor audit
+- [x] Add Customer retail catalog, isolated cart and server-authoritative delivery checkout pages
+- [x] Verify unauthenticated Customer Retail entrypoint on GitHub Pages without rendering fake catalog or financial data
