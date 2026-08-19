@@ -14,3 +14,7 @@
 - [x] Restrict Retail POS SECURITY DEFINER RPCs to authenticated users after advisor audit
 - [x] Add Customer retail catalog, isolated cart and server-authoritative delivery checkout pages
 - [x] Verify unauthenticated Customer Retail entrypoint on GitHub Pages without rendering fake catalog or financial data
+- [x] Phase 7: reconcile POS runtime with live Retail RPC contracts and idempotent sale submission
+- [x] Phase 7: add actual inventory movement history without synthetic data
+- [x] Phase 7: expand catalog media flow to upload compressed camera/gallery images before persisting image_url
+- [x] Phase 7: add sales filtering and receipt-detail behavior only where the server contract provides real data
