@@ -46,6 +46,19 @@ test("POS sale submission sends only product IDs and quantities with an idempote
   assert.doesNotMatch(source, /p_grand_total/);
 });
 
+test("POS runtime remains aligned with the live Retail RPC names and returned product fields", async () => {
+  const source = await runtime();
+  assert.match(source, /retail_list_store_products/);
+  assert.match(source, /retail_create_pos_sale/);
+  assert.match(source, /retail_upsert_store_product/);
+  assert.match(source, /retail_record_inventory_movement/);
+  assert.match(source, /from\('retail_pos_sales'\)/);
+  assert.match(source, /select\('id,sale_number,payment_method,grand_total,created_at'\)/);
+  assert.match(source, /item\.available_quantity/);
+  assert.match(source, /item\.price/);
+  assert.match(source, /store_product_id: line\.id, quantity: line\.quantity/);
+});
+
 test("Inventory history and adjustments use the authenticated backend data model with clear empty states", async () => {
   const source = await runtime();
   const inventory = await readSource(inventoryUrl);
