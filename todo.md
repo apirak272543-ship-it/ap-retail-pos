@@ -10,3 +10,5 @@
 - [x] Generate AP Retail POS icon and apply it to Android shell branding
 - [x] Add deterministic tests for cart guards and WebView URL policy
 - [ ] Verify web, Android shell configuration and cross-app contracts
+- [x] Add additive Retail POS schema, server-authoritative sale RPC and append-only inventory audit trail
+- [x] Restrict Retail POS SECURITY DEFINER RPCs to authenticated users after advisor audit
