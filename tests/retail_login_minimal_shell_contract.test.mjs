@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const page = fs.readFileSync('index.html', 'utf8');
+assert.match(page, /id="signin-form"/, 'Retail POS ต้องคงฟอร์มเข้าสู่ระบบ');
+assert.match(page, /aria-label="อีเมล"/, 'Retail POS login ต้องคง label สำหรับ accessibility');
+assert.match(page, /aria-label="รหัสผ่าน"/, 'Retail POS login ต้องคง label สำหรับ accessibility');
+assert.match(page, /id="signin-message"/, 'Retail POS ต้องคงพื้นที่ status/error ของการเข้าสู่ระบบ');
+assert.doesNotMatch(page, /auth-intro/, 'Retail POS login ต้องไม่มีข้อความระบบด้านบน');
+assert.doesNotMatch(page, /auth-footnote/, 'Retail POS login ต้องไม่มีข้อความระบบด้านล่าง');
+console.log('retail login minimal shell contract: PASS');

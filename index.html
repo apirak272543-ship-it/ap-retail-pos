@@ -10,11 +10,10 @@
   <link rel="stylesheet" href="shared/ap-login-media.css"><script src="shared/ap-login-media.js"></script></head>
   <body data-page="signin">
     <main class="auth-shell">
-      <section class="auth-card" aria-labelledby="signin-title">
-        <div class="brand-lockup" aria-label="AP Retail POS"><div class="brand-mark" aria-hidden="true">AP</div><div><p class="eyebrow">AP SERVICE</p><h1 id="signin-title">ระบบขายหน้าร้าน</h1></div></div>
-        <p class="auth-intro">จัดการหน้าร้าน สินค้า และสต๊อกจากข้อมูลจริงในระบบ AP Service</p>
-        <form id="signin-form" class="stack-form" novalidate><label>อีเมล<input id="email" name="email" type="email" autocomplete="email" inputmode="email" required /></label><label>รหัสผ่าน<input id="password" name="password" type="password" autocomplete="current-password" required /></label><button class="button button-primary" type="submit">เข้าสู่ระบบร้านค้า</button></form>
-        <p id="signin-message" class="form-message" role="status" aria-live="polite"></p><p class="auth-footnote">ใช้บัญชีร้านค้าที่ผู้ดูแลระบบ AP Service อนุมัติแล้วเท่านั้น</p>
+      <section class="auth-card" aria-label="เข้าสู่ระบบ AP Retail POS">
+        <div class="brand-lockup" aria-hidden="true"><div class="brand-mark">AP</div></div>
+        <form id="signin-form" class="stack-form" novalidate><input id="email" name="email" type="email" autocomplete="email" inputmode="email" aria-label="อีเมล" required /><input id="password" name="password" type="password" autocomplete="current-password" aria-label="รหัสผ่าน" required /><button class="button button-primary" type="submit">เข้าสู่ระบบ</button></form>
+        <p id="signin-message" class="form-message" role="status" aria-live="polite"></p>
       </section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="shared/runtime-config.js"></script><script type="module" src="shared/retail-app.js"></script>

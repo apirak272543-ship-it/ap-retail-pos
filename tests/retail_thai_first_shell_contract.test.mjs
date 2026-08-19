@@ -3,7 +3,8 @@ import { readFileSync } from 'node:fs';
 
 const page = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 assert.match(page, /<title>AP Retail POS \| ระบบขายหน้าร้าน<\/title>/, 'Retail POS page title must include a Thai-first product description');
-assert.match(page, /<h1 id="signin-title">ระบบขายหน้าร้าน<\/h1>/, 'Retail POS sign-in heading must be Thai-first');
-assert.match(page, /ผู้ดูแลระบบ AP Service อนุมัติแล้ว/, 'Retail POS access instruction must be Thai-first');
-assert.doesNotMatch(page, />Retail POS<\//, 'Retail POS must not expose an untranslated generic sign-in heading');
+assert.match(page, /aria-label="เข้าสู่ระบบ AP Retail POS"/, 'Retail POS sign-in shell must retain a Thai accessibility label');
+assert.match(page, /aria-label="อีเมล"/, 'Retail POS sign-in email input must retain a Thai accessibility label');
+assert.doesNotMatch(page, /auth-intro/, 'Retail POS sign-in shell must not show a system instruction');
+assert.doesNotMatch(page, /auth-footnote/, 'Retail POS sign-in shell must not show an access instruction');
 console.log('retail thai-first shell contract: PASS');
