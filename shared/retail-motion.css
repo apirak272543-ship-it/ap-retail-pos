@@ -1,0 +1,13 @@
+@media (prefers-reduced-motion: no-preference) {
+  .button,.icon-button,.chip,.product-card,.quantity-controls button,.bottom-nav a,.catalog-row button,.text-button,button:not(:disabled),a[href],[role="button"] {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: transform 140ms cubic-bezier(.23,1,.32,1), box-shadow 140ms cubic-bezier(.23,1,.32,1), filter 140ms cubic-bezier(.23,1,.32,1);
+  }
+  .button:active,.icon-button:active,.chip:active,.product-card:active,.quantity-controls button:active,.bottom-nav a:active,.catalog-row button:active,.text-button:active,button:not(:disabled):active,a[href]:active,[role="button"]:active {
+    transform: translateY(2px) scale(.965);
+    filter: saturate(.94) brightness(.98);
+  }
+  .button-primary:active { box-shadow: 0 3px 8px rgba(18,128,92,.26); }
+  .product-card:active { box-shadow: 0 4px 10px rgba(18,128,92,.10); }
+}
