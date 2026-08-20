@@ -1,0 +1,14 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const migration = fs.readFileSync('supabase/migrations/20260820_007_retail_barcode_lookup.sql', 'utf8');
+const html = fs.readFileSync('pos.html', 'utf8');
+const source = fs.readFileSync('shared/retail-barcode-lookup.js', 'utf8');
+assert.match(migration, /retail_find_store_product_by_identifier/, 'ต้องมี RPC สำหรับค้นหา barcode/SKU');
+assert.match(migration, /retail_get_my_context/, 'RPC ต้องอิง context สาขาที่มีสิทธิ์');
+assert.match(migration, /retail_product_identifiers/, 'RPC ต้องค้น identifier ที่ลงทะเบียนจริง');
+assert.match(migration, /REVOKE ALL[\s\S]*GRANT EXECUTE[\s\S]*authenticated/, 'RPC ต้องไม่เปิด public execution');
+assert.match(html, /retail-barcode-lookup\.js/, 'หน้า POS ต้องโหลด scanner enhancement');
+assert.match(source, /retail_find_store_product_by_identifier/, 'scanner UI ต้องใช้ RPC ที่ตรวจสาขา');
+assert.match(source, /available_quantity/, 'scanner ต้องห้ามเพิ่มของที่ไม่มีสต๊อก');
+assert.match(source, /addButton\.click\(\)/, 'scanner ต้องส่งต่อเข้า cart flow เดิมแทนสร้าง sale ใหม่');
+console.log('retail barcode lookup contract: PASS');
