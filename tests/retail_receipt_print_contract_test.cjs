@@ -1,0 +1,11 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const html = fs.readFileSync('sales.html', 'utf8');
+const source = fs.readFileSync('shared/retail-receipt-print.js', 'utf8');
+assert.match(html, /retail-receipt-print\.js/, 'หน้าประวัติขายต้องโหลด receipt print');
+assert.match(source, /retail_pos_sales/, 'receipt ต้องอ่าน sale snapshot จริง');
+assert.match(source, /retail_pos_sale_items/, 'receipt ต้องอ่านรายการสินค้าจริง');
+assert.match(source, /data-print-receipt/, 'ต้องเพิ่มปุ่มพิมพ์ใน sale detail');
+assert.match(source, /window\.print\(\)/, 'receipt ต้องเรียก native print จากหน้าต่างแยก');
+assert.doesNotMatch(source, /\.insert\(|\.update\(|\.delete\(|\.rpc\(/, 'receipt ต้องไม่มี write flow หรือ RPC mutation');
+console.log('retail receipt print contract: PASS');
