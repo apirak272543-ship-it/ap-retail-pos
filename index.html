@@ -7,15 +7,23 @@
     <meta name="description" content="AP Retail POS สำหรับจัดการการขาย สินค้า และสต๊อกของร้านค้า" />
     <title>AP Retail POS | ระบบขายหน้าร้าน</title>
     <link rel="stylesheet" href="shared/retail.css" />
-  <link rel="stylesheet" href="shared/ap-login-media.css"><script src="shared/ap-login-media.js"></script></head>
+  <link rel="stylesheet" href="shared/ap-login-media.css?v=auth-ui-v1"><script src="shared/ap-login-media.js?v=auth-ui-v1"></script></head>
   <body data-page="signin">
-    <main class="auth-shell">
-      <section class="auth-card" aria-label="เข้าสู่ระบบ AP Retail POS">
-        <div class="brand-lockup" aria-hidden="true"><div class="brand-mark">AP</div></div>
-        <form id="signin-form" class="stack-form" novalidate><input id="email" name="email" type="email" autocomplete="email" inputmode="email" aria-label="อีเมล" required /><input id="password" name="password" type="password" autocomplete="current-password" aria-label="รหัสผ่าน" required /><button class="button button-primary" type="submit">เข้าสู่ระบบ</button></form>
-        <p id="signin-message" class="form-message" role="status" aria-live="polite"></p>
+    <main class="ap-login-shell">
+      <section class="ap-login-card" data-login-panel="retail_pos" aria-label="เข้าสู่ระบบ AP Retail POS">
+        <div class="ap-login-brandline"><span class="ap-login-mark">AP</span><div><strong>AP Retail POS</strong><small>ระบบขายหน้าร้านและจัดการสต๊อก</small></div></div>
+        <span class="ap-login-role">Retail / POS Login</span>
+        <h1 class="ap-login-title">เข้าสู่ระบบสาขา</h1>
+        <p class="ap-login-intro">ใช้บัญชีที่ Admin สร้างและอนุมัติสิทธิ์สาขาให้แล้ว ระบบจะตรวจสอบบริบทสาขาก่อนเปิด POS</p>
+        <form id="signin-form" class="ap-login-form" novalidate>
+          <label class="ap-login-field"><span>อีเมล</span><div class="ap-login-control"><span class="ap-login-icon" aria-hidden="true"></span><input id="email" name="email" type="email" autocomplete="email" inputmode="email" aria-label="อีเมล" placeholder="name@example.com" required /></div></label>
+          <label class="ap-login-field"><span>รหัสผ่าน</span><div class="ap-login-control"><span class="ap-login-icon" aria-hidden="true"></span><input id="password" name="password" type="password" autocomplete="current-password" aria-label="รหัสผ่าน" placeholder="กรอกรหัสผ่านของคุณ" required /><button class="ap-login-password-toggle" type="button" data-password-toggle aria-controls="password" aria-label="แสดงรหัสผ่าน"></button></div></label>
+          <button class="ap-login-submit" data-login-submit type="submit">เข้าสู่ระบบ</button>
+          <p id="signin-message" class="ap-login-status" data-login-status role="status" aria-live="polite"></p>
+        </form>
+        <div class="ap-login-admin-note"><span aria-hidden="true"></span><div><strong>บัญชีและสิทธิ์สาขาสร้างโดย Admin</strong><p>หากไม่พบสาขาหรือไม่มีสิทธิ์ใช้งาน โปรดติดต่อผู้ดูแลระบบ</p></div></div>
       </section>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="shared/runtime-config.js"></script><script type="module" src="shared/retail-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="shared/runtime-config.js"></script><script type="module" src="shared/retail-app.js?auth=login-v1"></script>
   </body>
 </html>
